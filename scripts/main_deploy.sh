@@ -9,6 +9,9 @@ log_file="$(cd ../log;pwd)/action_all.log"
 check_user(){
     if [ $(id -u) -ne 0 ];then
         echo -e "$head_color[1;31m请使用root用户 $tail_color"
+        exit 1
+    else
+	mkdir ../log
     fi
 }
 
