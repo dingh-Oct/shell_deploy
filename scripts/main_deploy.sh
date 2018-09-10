@@ -32,21 +32,19 @@ check_network(){
 
 # 判断输入的选项
 check_action(){
+    action=$(echo "$action"|tr [A-Z] [a-z])
     case "$action" in
-        1)
+        mysql)
             ./install_mysql.sh
         ;;
-        2)
+        nginx)
             ./install_nginx.sh
         ;;
-        3)
-            ./install_jdk-8.sh
-        ;;
-        4)
+        q|Q)
             exit 0
         ;;
         *)
-            echo "$head_color[1;34m请输入正确的选项 $tail_color"
+            echo -e "$head_color[1;34m请输入正确的选项 $tail_color"
         ;;
     esac
 }
@@ -56,7 +54,7 @@ menu(){
     check_network
     while true
     do
-        echo -e "$head_color[1;36m1.mysql\n2.nginx\n3.jdk-8\n4.退出 $tail_color"
+        echo -e "$head_color[1;36m$(ls *|egrep -v 'main_deploy.sh'|awk -F'[_.]' '{print $2}')\n输入(q|Q)退出! $tail_color"
         read -p '您要安装什么? ' action
         check_action
     done
